@@ -118,8 +118,8 @@ if __name__ == "__main__":
         import setproctitle
         setproctitle.setproctitle(os.path.basename(os.path.abspath(sys.argv[0])))
     except Exception as e:
-        logger("setproctitle not available. Process will be named python", exc_info = e)
-        pass
+        logger.debug("setproctitle not available. Process will be named python",
+                     exc_info = e)
     
     if g15desktop.get_desktop() == "gnome-shell":
         sys.stderr.write("System Tray is not recommended in GNOME Shell, use the GNOME Shell extension instead (if you have version 3.4 or above)")

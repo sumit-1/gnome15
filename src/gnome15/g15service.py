@@ -630,7 +630,7 @@ class G15Service(g15desktop.G15AbstractService):
                     logger.info("Stopping account change notification")
                     g15accounts.notifier.stop()
                 except Exception as e:
-                    logget.debug("Error stopping account change notification", exc_info = e)
+                    logger.debug("Error stopping account change notification", exc_info = e)
                     pass
                 logger.info("Informing listeners we are stopping")
                 for listener in self.service_listeners:

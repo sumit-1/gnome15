@@ -230,10 +230,10 @@ class UDisksSource():
                             temp_c = kelvin - 273.15
                             sensor.value = temp_c
                         except ValueError as ve:
-                            logger.warn("Invalid temperature for device %s, %s.",
-                                        sensor_name,
-                                        result,
-                                        exc_info = ve)
+                            logger.warning("Invalid temperature for device %s, %s.",
+                                           sensor_name,
+                                           result,
+                                           exc_info = ve)
                             sensor.value = 0
                     else:
                         sensor.value = 0
@@ -305,7 +305,7 @@ class UDisks2Source():
                 sensor.value = drive_temperature(self.udisks_data[device])
                 logger.debug('Temperature of drive %s is %f.', sensor_name,sensor.value)
             except ValueError as ve:
-                logger.warn("Invalid temperature for device %s.", sensor_name, exc_info = ve)
+                logger.warning("Invalid temperature for device %s.", sensor_name, exc_info = ve)
                 sensor.value = 0
             self.sensors[sensor.name] = sensor
 

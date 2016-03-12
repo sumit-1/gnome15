@@ -177,7 +177,7 @@ class G15Message():
                 self.icon = None
             except Exception as e:
                 # Sometimes the image data seems to be bad
-                logger.warn("Failed to decode notification image", exc_info = e)
+                logger.warning("Failed to decode notification image", exc_info = e)
                 
             if self.embedded_image == None and ( self.icon == None or self.icon == "" ):
                 self.icon = g15icontools.get_icon_path("dialog-information", 1024)
@@ -333,7 +333,7 @@ class G15NotifyLCD():
         self._screen.key_handler.action_listeners.remove(self)
         if self._service:
             if not self._screen.service.shutting_down:
-                logger.warn("Deactivated notify service. Currently the service cannot be reactivated once deactivated. You must completely restart Gnome15")
+                logger.warning("Deactivated notify service. Currently the service cannot be reactivated once deactivated. You must completely restart Gnome15")
             self._service.active = False
             self._service.remove_from_connection()
             self._bus_name.__del__()
@@ -382,9 +382,9 @@ class G15NotifyLCD():
                 if id != 0 and not id in self._message_map:
                     if len(self._message_queue) > 0:
                         new_id = self._message_queue[0].id
-                        logger.warn("Got request to replace message %d, " \
-                                    "but we do not know about it. " \
-                                    "Just replacing visible message %d", id, new_id)
+                        logger.warning("Got request to replace message %d, " \
+                                       "but we do not know about it. " \
+                                       "Just replacing visible message %d", id, new_id)
                         id = new_id
                     else:
                         id = 0

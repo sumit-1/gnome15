@@ -233,7 +233,7 @@ class GridLayoutManager(LayoutManager):
             if c.is_showing():
                 bounds = c.view_bounds
                 if bounds is None:
-                    logger.warn("No bounds on component %s", c.id)
+                    logger.warning("No bounds on component %s", c.id)
                 else:
                     c.view_bounds = ( x, y, bounds[2], bounds[3])
                     x += bounds[2]
@@ -1004,7 +1004,7 @@ class Menu(Component):
         
     def get_item_height(self, item, group = False):
         if item.theme is None:
-            logger.warn("Component %s has no theme and so no height", item.id)
+            logger.warning("Component %s has no theme and so no height", item.id)
             return 10
         else:            
             return item.theme.bounds[3]
@@ -2223,6 +2223,5 @@ class G15Theme(object):
                             clip_copy.set("id", new_clip_id )
                             shadowed.set("clip-path", "url(#%s)" % new_clip_id)
                             clip_path_element.addprevious(clip_copy)
-                        
-                        
+
                         idx += 1

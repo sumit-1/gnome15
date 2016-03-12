@@ -431,7 +431,7 @@ class G15Cal(g15plugin.G15Plugin):
             try:
                 backend = get_backend(acc.type)
                 if backend is None:
-                    logger.warn("Could not find a calendar backend for %s", acc.name)
+                    logger.warning("Could not find a calendar backend for %s", acc.name)
                 else:
                     # Backends may specify if they need a network or not, so check the state
                     import gnome15.g15pluginmanager as g15pluginmanager
@@ -444,10 +444,10 @@ class G15Cal(g15plugin.G15Plugin):
                             self._event_days = dict(self._event_days.items() + \
                                                     backend_events.items())
                     else:
-                        logger.warn("Skipping backend %s because it requires the network, " \
+                        logger.warning("Skipping backend %s because it requires the network, " \
                                     "and the network is not availabe", acc.type)
             except Exception as e:
-                logger.warn("Failed to load events for account %s.", acc.name, exc_info = e)
+                logger.warning("Failed to load events for account %s.", acc.name, exc_info = e)
                     
         g15screen.run_on_redraw(self._rebuild_components, now)
         self._page.mark_dirty()

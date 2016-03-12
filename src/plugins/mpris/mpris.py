@@ -127,16 +127,16 @@ class AbstractMPRISPlayer():
             return True
         
     def next_track(self):
-        logger.warn("Next track not implemented")
+        logger.warning("Next track not implemented")
         
     def prev_track(self):
-        logger.warn("Previous track not implemented")
+        logger.warning("Previous track not implemented")
         
     def play_pause_track(self):
-        logger.warn("Play pause track not implemented")
+        logger.warning("Play pause track not implemented")
         
     def stop_track(self):
-        logger.warn("Stop track not implemented")
+        logger.warning("Stop track not implemented")
         
     def check_status(self):        
         new_status = self.get_new_status()
@@ -564,7 +564,7 @@ class MPRIS2Player(AbstractMPRISPlayer):
         the problem
         """
         if seek_time == 0:
-            logger.warn("Received no progress in seeked event, working around problem")
+            logger.warning("Received no progress in seeked event, working around problem")
             time.sleep(0.5)
             seek_time = self.get_progress() * 1000 * 1000
             

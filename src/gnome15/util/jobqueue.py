@@ -77,6 +77,8 @@ class GTimer:
                 self.complete = True
             finally:
                 self.scheduler.all_jobs_lock.release()
+                # Destroy the timeout, don't execute this function again.
+                return False
         
     def is_complete(self):
         return self.complete
@@ -86,7 +88,11 @@ class GTimer:
         try:
             if self in self.scheduler.all_jobs:
                 self.scheduler.all_jobs.remove(self)
-            gobject.source_remove(self.source)
+            # Check if callback function was executed, if yes this means that the timeout
+            # was automatically destroyed since the callback function returns False.
+            # Avoid thousands of warnings from source_remove().
+            if not self.is_complete():
+                gobject.source_remove(self.source)
             logger.debug("Cancelled GTimer %s", str(self.task_name))
         finally:
             self.scheduler.all_jobs_lock.release()

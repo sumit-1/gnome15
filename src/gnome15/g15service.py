@@ -912,7 +912,8 @@ class G15Service(g15desktop.G15AbstractService):
             connected_to_session_manager = True
             logger.info("Connected to GNOME session manager")
         except Exception as e:
-            logger.warning("GNOME session manager not available.", exc_info = e)
+            logger.info("GNOME session manager not available.")
+            logger.debug("GNOME connection attempt below :", exc_info = e)
 
         if not connected_to_session_manager:
             try :
@@ -932,7 +933,8 @@ class G15Service(g15desktop.G15AbstractService):
                 connected_to_session_manager = True
                 logger.info("Connected to MATE session manager")
             except Exception as e:
-                logger.warning("MATE session manager not available.", exc_info = e)
+                logger.info("MATE session manager not available.")
+                logger.debug("MATE connection attempt below :", exc_info = e)
 
         if not connected_to_session_manager:
             logger.warning("None of the supported session managers available, will not detect logout signal for clean shutdown.")
@@ -1044,7 +1046,8 @@ class G15Service(g15desktop.G15AbstractService):
             if active_window:
                 self._active_window_changed("", active_window)
         except Exception as e:
-            logger.warning("BAMF not available, falling back to polling WNCK.", exc_info = e)
+            logger.info("BAMF not available, falling back to polling WNCK.")
+            logger.debug("BAMF attempt below :", exc_info = e)
             try :                
                 import wnck
                 wnck.__file__

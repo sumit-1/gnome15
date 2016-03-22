@@ -219,7 +219,7 @@ def load_calibration(device_type):
                 finally :
                     f.close()
             else:
-                logger.warn("No joystick calibration available.")
+                logger.warning("No joystick calibration available.")
 
 def _get_js_config_file(device_type):
     """
@@ -400,4 +400,4 @@ def __check_devices():
             else:
                 emit(device_type, 0, 0)
                 emit(device_type, 0, 1)
-            
+

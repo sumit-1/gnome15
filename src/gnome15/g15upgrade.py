@@ -42,7 +42,7 @@ def version_0_x_0_to_0_8_5():
     old_path = os.path.expanduser("~/.gnome2/gnome15/lcdbiff/mailboxes.xml")
     new_path = os.path.join(g15globals.user_config_dir, "plugin-data", "lcdbiff", "mailboxes.xml")
     if os.path.exists(old_path) and not os.path.exists(new_path):
-        logger.warn("Upgrading to 0.8.5, moving mailboxes")
+        logger.warning("Upgrading to 0.8.5, moving mailboxes")
         os.renames(old_path, new_path)    
 
 def version_0_x_0_to_0_7_0():

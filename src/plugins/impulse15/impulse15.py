@@ -50,7 +50,7 @@ def get_source_index(source_name):
                 i = int(line[7:])
             elif line.startswith("name: <%s" % source_name):
                 return i
-    logger.warn("Audio source %s not found, default to first source", source_name)
+    logger.warning("Audio source %s not found, default to first source", source_name)
     return 0
 
 def create(gconf_key, gconf_client, screen):

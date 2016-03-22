@@ -219,7 +219,7 @@ class G15DBUSScreenService(AbstractG15DBUSService):
             self.PageChanged(dbus_page._bus_name)
             logger.debug("Sent page changed signal for %s", page.id)
         else:
-            logger.warn("Got page_changed event when no such page (%s) exists", page.id)
+            logger.warning("Got page_changed event when no such page (%s) exists", page.id)
         
     def new_page(self, page): 
         if g15scheduler.run_on_gobject(self.new_page, page):
@@ -814,7 +814,7 @@ class G15DBUSService(AbstractG15DBUSService):
             self.DeviceRemoved("%s/%s" % ( DEVICE_NAME, device.uid ))
             self._silently_remove_from_connector(dbus_device)
         else:
-            logger.warn("DBUS service did not know about a device for some reason (%s)", device.uid)
+            logger.warning("DBUS service did not know about a device for some reason (%s)", device.uid)
         
     def _device_added(self, device):
         dbus_device = G15DBUSDeviceService(self, device)

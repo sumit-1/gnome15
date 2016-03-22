@@ -343,8 +343,8 @@ class G15Plugins():
             for mod in imported_plugins:
                 plugin_dir_key = self._get_plugin_key(mod.id)
                 if mod.id in added:
-                    logger.warn("Same plugin with ID of %s is already loaded." \
-                                "Only the first copy will be used.", mod.id)
+                    logger.warning("Same plugin with ID of %s is already loaded." \
+                                   "Only the first copy will be used.", mod.id)
                 else:
                     self.conf_client.add_dir(plugin_dir_key, gconf.CLIENT_PRELOAD_NONE)
                     key = "%s/enabled" % plugin_dir_key

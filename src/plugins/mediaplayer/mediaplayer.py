@@ -927,7 +927,7 @@ class G15MediaPlayer(g15plugin.G15MenuPlugin):
                         self._mm_key = g15driver.G_KEY_PREV
                         self._player_page._rew()
                     else:
-                        logger.warn("Unsupported media key %s", key)
+                        logger.warning("Unsupported media key %s", key)
                     if self._mm_key_timer is not None:
                         self._mm_key_timer.cancel()
                         self._mm_key_timer = None
@@ -948,7 +948,7 @@ class G15MediaPlayer(g15plugin.G15MenuPlugin):
                
             logger.info("Grabbed multimedia keys")
         except dbus.DBusException as error:
-            logger.warn("Could not grab multi-media keys.", exc_info = error)
+            logger.warning("Could not grab multi-media keys.", exc_info = error)
             
     def _clear_mm_key(self):
         self._mm_key = None
@@ -1074,4 +1074,4 @@ class G15MediaPlayer(g15plugin.G15MenuPlugin):
             if response == gtk.RESPONSE_OK:
                 return dialog.get_filename()
         finally:
-            dialog.destroy() 
+            dialog.destroy()

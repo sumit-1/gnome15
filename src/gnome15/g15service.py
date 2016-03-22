@@ -197,20 +197,20 @@ class MacroHandler(object):
                 self.virtual_keyboard = virtkey.virtkey()
                 self.x_test_available = False
             except Exception as e:
-                logger.warn("No python-virtkey, macros may be weird. Trying XTest", exc_info = e)
+                logger.warning("No python-virtkey, macros may be weird. Trying XTest", exc_info = e)
     
                 # Determine whether to use XTest for sending key events to X
                 self.x_test_available  = True
                 try :
                     import Xlib.ext.xtest
                 except ImportError as e:
-                    logger.warn("No XTest, falling back to raw X11 events", exc_info = e)
+                    logger.warning("No XTest, falling back to raw X11 events", exc_info = e)
                     self.x_test_available = False
                      
                 self.local_dpy = Xlib.display.Display()
                 
                 if self.x_test_available  and not self.local_dpy.query_extension("XTEST") :
-                    logger.warn("Found XTEST module, but the X extension could not be found")
+                    logger.warning("Found XTEST module, but the X extension could not be found")
                     self.x_test_available = False
         
     def send_string(self, ch, press):
@@ -378,7 +378,7 @@ class MacroHandler(object):
             if keysym_code == 65027:
                 keycode = 108
             else:
-                logger.warn("Unknown keysym %d", keysym_code)
+                logger.warning("Unknown keysym %d", keysym_code)
                 keycode = 0
         else:
             
@@ -508,7 +508,7 @@ class MacroScriptExecution(object):
                         self._send_uinput(split[2], val, 0)
                 elif op == "wait":
                     if self.all_keys_up:
-                        logger.warn("All keys for the macro %s are already up, " \
+                        logger.warning("All keys for the macro %s are already up, " \
                                     "the rest of the script will be ignored", self.macro.name)
                         return False
                     else:
@@ -630,7 +630,7 @@ class G15Service(g15desktop.G15AbstractService):
                     logger.info("Stopping account change notification")
                     g15accounts.notifier.stop()
                 except Exception as e:
-                    logget.debug("Error stopping account change notification", exc_info = e)
+                    logger.debug("Error stopping account change notification", exc_info = e)
                     pass
                 logger.info("Informing listeners we are stopping")
                 for listener in self.service_listeners:
@@ -642,7 +642,7 @@ class G15Service(g15desktop.G15AbstractService):
             finally :
                 self.stopping = False
         else:
-            logger.warn("Ignoring stop request, already stopped.")
+            logger.warning("Ignoring stop request, already stopped.")
             
     def restart(self):        
         g15os.run_script("g15-desktop-service", ["restart"], background = True)

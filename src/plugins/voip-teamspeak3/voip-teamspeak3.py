@@ -352,7 +352,7 @@ class Teamspeak3Backend(voip.VoipBackend):
         if isinstance(error, EOFError):
             self._disconnected()
         else:
-            logger.warn("Teamspeak3 error. %s", str(error))
+            logger.warning("Teamspeak3 error. %s", str(error))
         
     def _handle_message(self, message):
         print message.command
@@ -649,7 +649,7 @@ class Teamspeak3Backend(voip.VoipBackend):
         if 'invokername' in message.args and 'msg' in message.args:
             self._plugin.message_received(message.args['invokername'], self._filter_formatting_tags(message.args['msg']))
         else:
-            logger.warn("Got text messsage I didn't understand. %s", str(message))
+            logger.warning("Got text messsage I didn't understand. %s", str(message))
             
     def _parse_notifytalkstatuschange_reply(self, message):
         clid = int(message.args['clid'])

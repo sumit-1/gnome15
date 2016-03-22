@@ -260,6 +260,41 @@ class G15NotifyLCD():
         self.blink_delay = g15gconf.get_int_or_default(self._gconf_client, self._gconf_key + "/blink_delay", 500)
         self.keyboard_backlight_color  = g15gconf.get_rgb_or_default(self._gconf_client, self._gconf_key + "/keyboard_backlight_color", ( 128, 128, 128 ))
 
+    def _get_busname(self, retry=False):
+        try:
+            return dbus.service.BusName(IF_NAME,
+                                        bus=self._bus,
+                                        replace_existing=True,
+                                        allow_replacement=True,
+                                        do_not_queue=True)
+        except NameExistsException as E:  # name is taken. Look up who owns it
+            if not retry: return None
+            try:
+                proxy = self._bus.get_object('org.freedesktop.DBus',
+                                             '/org/freedesktop/DBus')
+                creds = proxy.GetConnectionCredentials(IF_NAME)
+                if 'ProcessID' in creds:
+                    pid = creds['ProcessID']
+                    with open("/proc/%s/cmdline" % (pid,)) as F:
+                        pn = F.read().split('\x00')[0]
+                    if pn in OTHER_NOTIFY_DAEMON_PROCESS_NAMES:
+                        process = subprocess.Popen(['killall', '--quiet', pn])
+                        if process.wait():
+                            logger.debug("Process still exists, Waiting one more second")
+                            time.sleep(1.0)
+                        return self._get_busname(retry=False)
+                    else:
+                        logger.debug("BusName is owned by unfamiliar process %s", pn)
+            except dbus.DBusException as E:
+                logger.debug("Failed to determine process owning %s",
+                             IF_NAME, exc_info=E)
+            except IOError as E:
+                logger.debug("Error trying to retrieve notify daemon process name",
+                             exc_info=E)
+            except OSError as E:
+                logger.debug("Error while trying to kill notify daemon", exc_info=E)
+        return None
+
     def activate(self):
         self._last_variant = None
         self._displayed_notification = 0
@@ -281,22 +316,16 @@ class G15NotifyLCD():
         
         if not self.on_desktop:        
             # Already running
-            for i in range(0, 6):
-                try :            
-                    for pn in OTHER_NOTIFY_DAEMON_PROCESS_NAMES:
-                        process = subprocess.Popen(['killall', '--quiet', pn])
-                        process.wait()
-                    self._bus_name = dbus.service.BusName(IF_NAME, bus=self._bus, replace_existing=True, allow_replacement=True, do_not_queue=True)
-                    break
-                except NameExistsException as e:
-                    logger.debug("Process still exists, Waiting one more second", exc_info = e)
-                    time.sleep(1.0)
-                    if i == 2:
-                        logger.error("Process still exists after waiting", exc_info = e)
-                        raise
-            
-            try :
-            	self._service = G15NotifyService(self._gconf_client, self._gconf_key, self._screen, self._bus_name, self)
+            self._bus_name = self._get_busname()
+            try:
+                if self._bus_name:
+                    self._service = G15NotifyService(self._gconf_client,
+                                                     self._gconf_key,
+                                                     self._screen,
+                                                     self._bus_name,
+                                                     self)
+                else:
+                    logger.warning("Couldn't obtain BusName. Falling back to snooping.")
             except KeyError as e:
                 logger.error("DBUS notify service failed to start. May already be started.",
                              exc_info = e)

@@ -14,7 +14,7 @@ EXTRA_DIST = colorpicker.en_GB.po \
 all-local:
 	for M_LOCALE in @ENABLED_LOCALES@; do \
 		mkdir -p $$M_LOCALE/LC_MESSAGES ; \
-		for M_PO in *.po; do \
+		for M_PO in "$(abs_srcdir)"/*.po; do \
 			BN=`basename $$M_PO .po`; \
 			LL=`basename $$BN .$$M_LOCALE`.mo; \
 			echo "$$M_PO -> $$LL"; \

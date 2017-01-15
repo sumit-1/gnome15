@@ -12,7 +12,7 @@ Homepage: https://gnome15.org/
 
 Package: gnome15
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}, python-wnck
 Description: Tools and libs for Logithech G series keyboards
  Gnome15 provides a panel indicator (or applet), configuration tool,
  macro system and plugin framework for the Logitech G series keyboards

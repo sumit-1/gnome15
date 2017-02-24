@@ -1,0 +1,22 @@
+Source: gnome15
+Section: extra
+Priority: optional
+Maintainer: Dmitry Yu Okunev <dyokunev@ut.mephi.ru>
+Build-Depends: debhelper (>=9), python-dev, python-gtk2-dev, python-keyring,
+ python-virtkey, python-pyinotify, python-usb, python-gconf, python-rsvg,
+ python-uinput, python-xlib
+Standards-Version: 3.9.8
+Homepage: https://gnome15.org/
+#Vcs-Git: git://anonscm.debian.org/collab-maint/gnome15.git
+#Vcs-Browser: https://anonscm.debian.org/cgit/collab-maint/gnome15.git
+
+Package: gnome15
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, python-wnck
+Description: Tools and libs for Logithech G series keyboards
+ Gnome15 provides a panel indicator (or applet), configuration tool,
+ macro system and plugin framework for the Logitech G series keyboards
+ and headsets, including the G15, G19, G13, G930, G35, G510, G11, G110
+ and the Z-10 speakers. The intention is to provide the best
+ integration with the Linux desktop possible, using the standard
+ protocols and libraries where appropriate.

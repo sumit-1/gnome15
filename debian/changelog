@@ -1,0 +1,5 @@
+gnome15 (0~git-1) unstable; urgency=medium
+
+  * Initial debian package (git commit abfdec9016768e1c31beda29b25568eed6f7dfe3)
+
+ -- Dmitry Yu Okunev <dyokunev@ut.mephi.ru>  Sun, 15 Jan 2017 20:25:19 +0300

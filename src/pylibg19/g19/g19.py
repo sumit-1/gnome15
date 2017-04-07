@@ -371,10 +371,10 @@ class G19UsbController(object):
         #self.handleIf1.setConfiguration(1)
         
         logger.debug("Claiming LCD interface")
-        self.handleIf0.claimInterface(display_interface)
+        self.handleIf0.claimInterface(display_interface.interfaceNumber)
         logger.info("Claimed LCD interface")
         logger.debug("Claiming macro interface")
-        self.handleIf1.claimInterface(macro_and_backlight_interface)
+        self.handleIf1.claimInterface(macro_and_backlight_interface.interfaceNumber)
         logger.info("Claimed macro interface")
         
         if self.enable_mm_keys:

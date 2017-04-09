@@ -427,10 +427,11 @@ device_added_listeners = []
 device_removed_listeners = []
     
 def __device_added(observer, device):
-    if "uevent" in device.attributes:
-        uevent = g15pythonlang.parse_as_properties(device.attributes["uevent"])
+    uevent_attr = device.attributes.get('uevent', None)
+    if uevent_attr != None:
+        uevent = g15pythonlang.parse_as_properties(uevent_attr)
         if "PRODUCT" in uevent:
-            if "subsystem" in device.attributes and device.attributes["subsystem"] == "usb":
+            if device.attributes.get("subsystem", None) == "usb":
                 major,minor,_ = uevent["PRODUCT"].split("/")
             else:
                 _,major,minor,_ = uevent["PRODUCT"].split("/")

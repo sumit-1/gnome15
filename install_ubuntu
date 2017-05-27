@@ -1,0 +1,48 @@
+sudo apt-get update
+
+sudo apt-get upgrade
+
+sudo apt-get install make git build-essential
+
+cd /tmp
+
+git clone https://github.com/Huskynarr/gnome15.git
+
+cd gnome15
+
+sudo apt-get install autoconf libtool
+
+sudo apt-get install python-gtk2-dev python-virtkey python-pyinotify python-usb python-rsvg python-xlib
+
+sudo git clone https://github.com/tuomasjjrasanen/python-uinput.git ~/Python-UInput
+
+cd ~/Python-UInput
+
+python setup.py build
+
+sudo python setup.py install
+
+
+sudo apt-get install automake python-pip python-dev libffi-dev libssl-dev libxml2-dev libxslt1-dev libjpeg8-dev zlib1g-dev libudev-dev
+
+sudo libtoolize && sudo aclocal && sudo autoheader && sudo autoconf && sudo automake --add-missing
+
+sudo apt-get install python-setuptools
+
+sudo apt-get install python-pip
+
+sudo easy_install keyring
+
+sudo pip install keyring --upgrade
+
+sudo pip install python-uinput
+
+cd ..
+
+autoreconf -i
+
+./configure
+
+make
+
+sudo make install
